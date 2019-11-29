@@ -34,7 +34,7 @@ public class JdbcPractice {
 
             } catch(SQLException ex) {
                 ex.printStackTrace();
-            }  // Step 5: Close conn and stmt - Done automatically by try-with-resources (JDK 7)
+            }
         }
     }
 
