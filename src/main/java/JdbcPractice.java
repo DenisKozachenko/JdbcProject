@@ -1,4 +1,42 @@
+import java.sql.*;
+
 public class JdbcPractice {
+
+
+
+  //  import java.sql.*;  // Using 'Connection', 'Statement' and 'ResultSet' classes in java.sql package
+
+        public static void main(String[] args) {
+            try (
+                    // Step 1: Allocate a database 'Connection' object
+                    Connection conn = DriverManager.getConnection(
+                            "jdbc:mysql://hostname:port/kozachdb", "root2", "root2");
+
+                    Statement stmt = conn.createStatement();
+            ) {
+
+                String strSelect = "select name, surname from customers";
+                System.out.println("The SQL statement is: " + strSelect + "\n");
+
+                ResultSet rset = stmt.executeQuery(strSelect);
+
+
+                System.out.println("The records selected are:");
+                int rowCount = 0;
+                while(rset.next()) {   // Move the cursor to the next row, return false if no more row
+                    String name = rset.getString("name");
+                    String surname = rset.getString(
+                            "surname");
+                    System.out.println(name + ", " + surname + "");
+                    ++rowCount;
+                }
+                System.out.println("Total number of records = " + rowCount);
+
+            } catch(SQLException ex) {
+                ex.printStackTrace();
+            }  // Step 5: Close conn and stmt - Done automatically by try-with-resources (JDK 7)
+        }
+    }
 
 /*
 ----> Here I am creating the customers table <-------
@@ -59,4 +97,4 @@ public class JdbcPractice {
 
 
 */
-}
+
